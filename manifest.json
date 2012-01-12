@@ -1,0 +1,16 @@
+{
+   "background_page": "background.html",
+   "content_scripts": [ {
+      "css": [ "jquery.tooltip.css" ],
+      "js": [ "jquery.js", "jquery.tooltip.min.js", "util.js", "script.js" ],
+      "matches": [ "http://www.last.fm/*", "http://*.livejournal.com/*", "http://funkysouls.com/*" ],
+      "run_at": "document_end"
+   } ],
+   "description": "Some customizations for last.fm",
+   "icons": {
+      "128": "icon.png"
+   },
+   "name": "Last.fm+",
+   "permissions": [ "http://ws.audioscrobbler.com/*", "http://www.last.fm/*" ],
+   "version": "0.0.5"
+}

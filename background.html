@@ -1,0 +1,52 @@
+<html>
+<head>
+<script type="text/javascript" src="util.js"></script>
+<script type="text/javascript">
+function buildRequestUrl(method, params)
+{
+	var requestUrl = "http://ws.audioscrobbler.com/2.0/?method={0}".fmt(method);
+
+	for(paramName in params)
+	{
+		if(params[paramName])
+		{
+			requestUrl += "&{0}={1}".fmt(paramName, params[paramName]);
+		}
+	}
+	requestUrl += "&api_key=15ce8760abe155ebab4a6365ec6c9915";
+	requestUrl += "&format=json";
+	console.log(requestUrl);
+	return requestUrl;
+}
+
+function onPortConnect(port)
+{
+	if(port.name == "artist.getinfo")
+	{
+		port.onMessage.addListener(function(msg){
+			var xhr = new XMLHttpRequest();
+
+			xhr.open("GET", buildRequestUrl("artist.getinfo", msg), false);
+			xhr.send();
+			port.postMessage(eval("(" + xhr.responseText + ")"));
+		});
+	}
+	else if(port.name = "user.getinfo")
+	{
+		port.onMessage.addListener(function(msg){
+				var xhr = new XMLHttpRequest();
+
+				xhr.open("GET", buildRequestUrl("user.getinfo", msg), false);
+				xhr.send();
+				port.postMessage(eval("(" + xhr.responseText + ")"));
+		});
+	}
+}
+ window.addEventListener( "load", function(){
+	chrome.self.onConnect.addListener(onPortConnect);
+}, false);
+</script>
+</head>
+<body> 
+</body>
+</html>
